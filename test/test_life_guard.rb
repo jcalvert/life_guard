@@ -14,12 +14,12 @@ class TestLifeGuard < Minitest::Test
 
 
   def setup
+    Rails.stubs(:env).returns('test')
     @dummy_app = Dummy.new
     ActiveRecord::Base.configurations = { 'test' => {'adapter' => 'sqlite3', 'database' => 'test/db/test.db'} }
     ActiveRecord::Base.establish_connection(:test)
-    proc = Proc.new do |config, header| 
-      config['test']['database'] = config['test']['database'].gsub(/test\./, "test_#{header}.")
-      config
+    proc = Proc.new do |config, header|
+      config['database'] = config['database'].gsub(/test\./, "test_#{header}.")
     end
     @lifeguard = LifeGuard::Rack.new(@dummy_app, { :header => "HTTP_FOO", :transformation => proc})
   end
@@ -55,8 +55,7 @@ class TestLifeGuard < Minitest::Test
 
   def test_it_returns_404_if_no_connection
     proc = Proc.new do |config, header| 
-      config['test']['database'] = config['test']['database'].gsub(/test\./, "/foo/bar/bar/foobar_#{header}.")
-      config
+      config['database'] = config['database'].gsub(/test\./, "/foo/bar/bar/foobar_#{header}.")
     end
     @lifeguard = LifeGuard::Rack.new(@dummy_app, { :header => "HTTP_FOO", 
       :failure_message => "foo", :transformation => proc})

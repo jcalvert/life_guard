@@ -25,7 +25,8 @@ module LifeGuard
     end
 private
     def switch_connection(header)
-      modified_config = @lambda.call(@config.deep_dup, header)
+      modified_config = @config.deep_dup
+      @lambda.call(modified_config[Rails.env], header)
       change_connection(modified_config)
     end
 

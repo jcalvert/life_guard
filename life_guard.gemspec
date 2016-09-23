@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "life_guard"
   spec.version       = LifeGuard::VERSION
   spec.authors       = ["Jon Calvert"]
-  spec.email         = ["jonathan.calvert@kitcheck.com"]
+  spec.email         = ["jecalvert@gmail.com"]
 
   spec.summary       = %q{Manage the (active_record connection) pool}
   spec.description   = %q{Manage the (active_record connection) pool via Rack middleware}
@@ -34,6 +34,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rack", ">= 1.6.4"
   spec.add_development_dependency "mocha", "1.1.0"
   spec.add_development_dependency 'pry'
-  spec.add_development_dependency 'rails', "= 4.2.3"
+  spec.add_development_dependency 'rails', ">= 4.2.0"
 
 end
